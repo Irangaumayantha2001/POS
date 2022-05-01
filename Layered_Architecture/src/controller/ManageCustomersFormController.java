@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import dao.CustomerDAOImpl;
 import db.DBConnection;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import model.CustomerDTO;
 import view.tdm.CustomerTM;
 
 import java.io.IOException;
@@ -69,14 +71,15 @@ public class ManageCustomersFormController {
     private void loadAllCustomers() {
         tblCustomers.getItems().clear();
         /*Get all customers*/
-        try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
-            Statement stm = connection.createStatement();
-            ResultSet rst = stm.executeQuery("SELECT * FROM Customer");
+       try {
+           CustomerDAOImpl customerDAO = new CustomerDAOImpl();
+           ArrayList<CustomerDTO> allCustomers =customerDAO.getAllCustomers();
 
-            while (rst.next()) {
-                tblCustomers.getItems().add(new CustomerTM(rst.getString("id"), rst.getString("name"), rst.getString("address")));
-            }
+           for (CustomerDTO customer:allCustomers
+                ) {
+               tblCustomers.getItems().add(new CustomerTM(customer.getId(), customer.getName(), customer.getAddress()));
+           }
+
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
         } catch (ClassNotFoundException e) {
