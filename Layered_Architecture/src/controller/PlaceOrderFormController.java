@@ -187,10 +187,7 @@ public class PlaceOrderFormController {
     }
 
     boolean existCustomer(String id) throws SQLException, ClassNotFoundException {
-        Connection connection = DBConnection.getDbConnection().getConnection();
-        PreparedStatement pstm = connection.prepareStatement("SELECT id FROM Customer WHERE id=?");
-        pstm.setString(1, id);
-        return pstm.executeQuery().next();
+        return new PlaceOrderDAOImpl().existCustomer(id);
     }
 
     public String generateNewOrderId() {
@@ -210,10 +207,6 @@ public class PlaceOrderFormController {
 
             PlaceOrderDAOImpl orderDAO =new PlaceOrderDAOImpl();
             cmbCustomerId.getItems().addAll(orderDAO.getAllCustomerIds());
-
-
-
-
 
 
 
