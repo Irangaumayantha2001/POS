@@ -106,14 +106,12 @@ public class PlaceOrderFormController {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
+                        PlaceOrderDAOImpl orderDao = new PlaceOrderDAOImpl();
+                        txtCustomerName.setText(orderDao.getCustomerName(cmbCustomerId.getValue()));
 
-                        PreparedStatement pstm = connection.prepareStatement("SELECT * FROM Customer WHERE id=?");
-                        pstm.setString(1, newValue + "");
-                        ResultSet rst = pstm.executeQuery();
-                        rst.next();
-                        CustomerDTO customerDTO = new CustomerDTO(newValue + "", rst.getString("name"), rst.getString("address"));
 
-                        txtCustomerName.setText(customerDTO.getName());
+
+
                     } catch (SQLException e) {
                         new Alert(Alert.AlertType.ERROR, "Failed to find the customer " + newValue + "" + e).show();
                     }
@@ -217,6 +215,10 @@ public class PlaceOrderFormController {
 
             PlaceOrderDAOImpl orderDAO =new PlaceOrderDAOImpl();
             cmbCustomerId.getItems().addAll(orderDAO.getAllCustomerIds());
+
+
+
+
 
 
 

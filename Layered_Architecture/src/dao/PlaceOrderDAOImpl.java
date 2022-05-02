@@ -55,5 +55,16 @@ public class PlaceOrderDAOImpl {
 
 
 
+    public String getCustomerName(String id) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        Statement stm = connection.createStatement();
+        ResultSet rst = stm.executeQuery("SELECT * FROM Customer WHERE id='" + id + "'");
+        if (rst.next()) {
+            return rst.getString(2);
+        }
+        return null;
+    }
+
+
 
 }
