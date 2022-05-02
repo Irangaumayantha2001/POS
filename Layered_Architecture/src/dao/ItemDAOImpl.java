@@ -2,12 +2,10 @@ package dao;
 
 import db.DBConnection;
 import model.ItemDTO;
+import view.tdm.ItemTM;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ItemDAOImpl {
@@ -27,6 +25,16 @@ public class ItemDAOImpl {
             allItems.add(new ItemDTO(code,description,unitPrice,qtyOnHand));
         }
         return  getAllItems();
+    }
+
+    public boolean saveItems(ItemDTO dto) throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        PreparedStatement pstm = connection.prepareStatement("INSERT INTO Item (code, description, unitPrice, qtyOnHand) VALUES (?,?,?,?)");
+        pstm.setString(1 ,dto.getCode());
+        pstm.setString(2,dto.getDescription());
+        pstm.setBigDecimal(3,dto.getUnitPrice());
+        pstm.setInt(4,dto.getQtyOnHand());
+        return pstm.executeUpdate()>0;
     }
 
 }
