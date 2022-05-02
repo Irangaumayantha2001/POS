@@ -220,6 +220,7 @@ public class ManageCustomersFormController {
             CustomerDAOImpl customerdao = new CustomerDAOImpl();
             return customerdao.genarenewId();
 
+
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
         } catch (ClassNotFoundException e) {
