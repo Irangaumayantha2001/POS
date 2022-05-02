@@ -42,6 +42,16 @@ public class PlaceOrderDAOImpl {
         return rst.next() ? String.format("OID-%03d", (Integer.parseInt(rst.getString("oid").replace("OID-", "")) + 1)) : "OID-001";
     }
 
+    public ArrayList<String> getAllCustomerIds() throws SQLException, ClassNotFoundException {
+        Connection connection = DBConnection.getDbConnection().getConnection();
+        Statement stm = connection.createStatement();
+        ResultSet rst = stm.executeQuery("SELECT id FROM Customer");
+        ArrayList<String> allCustomerIds = new ArrayList<>();
+        while (rst.next()) {
+            allCustomerIds.add(rst.getString(1));
+        }
+        return allCustomerIds;
+    }
 
 
 
