@@ -2,6 +2,7 @@ package controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import dao.ItemDAO;
 import dao.ItemDAOImpl;
 import db.DBConnection;
 import javafx.application.Platform;
@@ -76,7 +77,7 @@ public class ManageItemsFormController {
         try {
             /*Get all items*/
 
-            ItemDAOImpl itemdao = new ItemDAOImpl();
+            ItemDAO itemdao = new ItemDAOImpl();
             ArrayList<ItemDTO> allItems = itemdao.getAllItems();
             for (ItemDTO item:allItems
                  ) {
@@ -141,7 +142,7 @@ public class ManageItemsFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
 
-            ItemDAOImpl itemDAO = new ItemDAOImpl();
+            ItemDAO itemDAO = new ItemDAOImpl();
             itemDAO.deleteItems(code);
 
             tblItems.getItems().remove(tblItems.getSelectionModel().getSelectedItem());
@@ -197,7 +198,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
                 /*Update Item*/
-               ItemDAOImpl itemDAO=new ItemDAOImpl();
+               ItemDAO itemDAO=new ItemDAOImpl();
                itemDAO.updateItems(new ItemDTO(description,unitPrice,qtyOnHand,code));
 
                 ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();
@@ -217,14 +218,14 @@ public class ManageItemsFormController {
 
 
     private boolean existItem(String code) throws SQLException, ClassNotFoundException {
-      ItemDAOImpl itemDAO = new ItemDAOImpl();
+      ItemDAO itemDAO = new ItemDAOImpl();
       return itemDAO.exitItems(code);
     }
 
 
     private String generateNewId() {
         try {
-            ItemDAOImpl itemDAO = new ItemDAOImpl();
+            ItemDAO itemDAO = new ItemDAOImpl();
             itemDAO.genarateNewId();
 
         } catch (SQLException e) {
