@@ -41,6 +41,9 @@ public class ManageCustomersFormController {
     public JFXTextField txtCustomerAddress;
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
+    //Use Property Dependency Injection
+    private final CustomerDAO customerdao = new CustomerDAOImpl();
+
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -73,8 +76,8 @@ public class ManageCustomersFormController {
         tblCustomers.getItems().clear();
         /*Get all customers*/
        try {
-           CustomerDAOImpl customerDAO = new CustomerDAOImpl();
-           ArrayList<CustomerDTO> allCustomers =customerDAO.getAllCustomers();
+
+           ArrayList<CustomerDTO> allCustomers =customerdao.getAllCustomers();
 
            for (CustomerDTO customer:allCustomers
                 ) {
@@ -150,8 +153,8 @@ public class ManageCustomersFormController {
                     new Alert(Alert.AlertType.ERROR, id + " already exists").show();
                 }
 
-                CustomerDAO customerdto = new CustomerDAOImpl();
-                customerdto.saveCustomer(new CustomerDTO(id,name,address));
+
+                customerdao.saveCustomer(new CustomerDTO(id,name,address));
 
                 tblCustomers.getItems().add(new CustomerTM(id, name, address));
             } catch (SQLException e) {
@@ -169,8 +172,8 @@ public class ManageCustomersFormController {
                 }
 
 
-                CustomerDAO cutomerdao = new CustomerDAOImpl();
-                cutomerdao.updateCutomer(new CustomerDTO(id,name,address));
+
+                customerdao.updateCutomer(new CustomerDTO(id,name,address));
 
             } catch (SQLException e) {
                 new Alert(Alert.AlertType.ERROR, "Failed to update the customer " + id + e.getMessage()).show();
@@ -201,8 +204,8 @@ public class ManageCustomersFormController {
             if (!existCustomer(id)) {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
-            CustomerDAO Customerdao =new CustomerDAOImpl();
-            Customerdao.deleteCustomer(id);
+
+            customerdao.deleteCustomer(id);
 
             tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
             tblCustomers.getSelectionModel().clearSelection();
@@ -218,7 +221,7 @@ public class ManageCustomersFormController {
     private String generateNewId() {
         try {
 
-            CustomerDAO customerdao = new CustomerDAOImpl();
+
             return customerdao.generateNewId();
 
 
