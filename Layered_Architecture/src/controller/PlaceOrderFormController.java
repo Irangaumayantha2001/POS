@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import dao.ItemDAOImpl;
+import dao.PlaceOrderDAO;
 import dao.PlaceOrderDAOImpl;
 import db.DBConnection;
 import javafx.application.Platform;
@@ -55,6 +56,11 @@ public class PlaceOrderFormController {
     public Label lblDate;
     public Label lblTotal;
     private String orderId;
+// using property Dependency
+
+    private final PlaceOrderDAO orderDao = new PlaceOrderDAOImpl();
+
+
 
     public void initialize() throws SQLException, ClassNotFoundException {
 
@@ -106,7 +112,7 @@ public class PlaceOrderFormController {
 //                            "There is no such customer associated with the id " + id
                             new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + newValue + "").show();
                         }
-                        PlaceOrderDAOImpl orderDao = new PlaceOrderDAOImpl();
+
                         txtCustomerName.setText(orderDao.getCustomerName(cmbCustomerId.getValue()));
 
 
@@ -205,8 +211,8 @@ public class PlaceOrderFormController {
     private void loadAllCustomerIds() {
         try {
 
-            PlaceOrderDAOImpl orderDAO =new PlaceOrderDAOImpl();
-            cmbCustomerId.getItems().addAll(orderDAO.getAllCustomerIds());
+
+            cmbCustomerId.getItems().addAll(orderDao.getAllCustomerIds());
 
 
 
