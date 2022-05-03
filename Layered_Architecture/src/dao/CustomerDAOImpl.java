@@ -6,7 +6,7 @@ import model.CustomerDTO;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class CustomerDAOImpl {
+public class CustomerDAOImpl implements CustomerDAO{
 
 
     public ArrayList<CustomerDTO> getAllCustomers() throws SQLException, ClassNotFoundException {
@@ -55,7 +55,7 @@ public class CustomerDAOImpl {
         return pstm.executeUpdate()>0;
     }
 
-    public String genarenewId() throws SQLException, ClassNotFoundException {
+    public String generateNewId()  throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
 
