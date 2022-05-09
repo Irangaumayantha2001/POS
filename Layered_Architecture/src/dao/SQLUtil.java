@@ -11,7 +11,8 @@ import java.sql.SQLException;
  * @author : Sanu Vithanage
  * @since : 0.1.0
  **/
-public class SQLUtil {
+public class
+SQLUtil {
     private static PreparedStatement getPreparedStatement(String sql, Object... args) throws SQLException, ClassNotFoundException {
         Connection connection = DBConnection.getDbConnection().getConnection();
         PreparedStatement pstm = connection.prepareStatement(sql);
