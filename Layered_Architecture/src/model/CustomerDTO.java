@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * @author : Sanu Vithanage
@@ -12,7 +14,7 @@ public class CustomerDTO implements Serializable {
     private String name;
     private String address;
 
-    public CustomerDTO() {
+    public CustomerDTO(String string, LocalDate parse, String rstString, String s, int anInt, BigDecimal bigDecimal) {
     }
 
     public CustomerDTO(String id, String name, String address) {
